@@ -11,8 +11,9 @@ import { style } from 'APP/config';
 const styles = {
   header: {
     flex: '0 0 auto',
+    padding: '1rem',
     background: style.background.header,
-    padding: '1rem'
+    color: style.color.header
   }
 };
 
@@ -36,7 +37,7 @@ class Header extends Component {
 
   render () {
     return (
-      <div style={styles.header}>HEADER</div>
+      <div style={styles.header}>ZATLAS</div>
     );
   }
 }

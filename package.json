@@ -13,6 +13,7 @@
     "ds-heightmap": "^0.1.2",
     "jimp": "^0.2.27",
     "prop-types": "^15.6.1",
+    "rc-slider": "^8.6.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "react-hot-loader": "^4.0.0",

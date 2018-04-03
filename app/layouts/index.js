@@ -2,7 +2,8 @@ import Content from './Content';
 import Header from './Header';
 import Footer from './Footer';
 
-import Heightmap from './Heightmap';
+import Panel from './Panel';
+import Showcase from './Showcase';
 
 export {
   // Layouts
@@ -11,5 +12,6 @@ export {
   Footer,
 
   // Tab
-  Heightmap
+  Panel,
+  Showcase
 };

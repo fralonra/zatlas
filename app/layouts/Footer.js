@@ -7,6 +7,7 @@ const styles = {
     flex: '0 0 auto',
     padding: '0.75rem',
     background: style.background.footer,
+    color: style.color.footer,
     fontSize: '75%',
     textAlign: 'center'
   },

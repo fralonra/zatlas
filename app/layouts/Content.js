@@ -1,42 +1,66 @@
 import React, { Component } from 'react';
-//import { Button } from 'reactstrap';
-//import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { Heightmap } from 'APP/layouts';
-//import routes from 'APP/routes';
+import { Showcase, Panel } from 'APP/layouts';
+import actions from 'APP/store/actions';
 import { style } from 'APP/config';
 
 const styles = {
   content: {
+    display: 'flex',
+    flexFlow: 'row',
     flex: '1 1 auto',
-    background: style.background.content
+    background: style.background.content,
+    color: style.color.content
   },
+  left: {
+
+  },
+  right: {
+
+  }
 };
 
-export default class Content extends Component {
+class Content extends Component {
   constructor (props) {
     super(props);
   }
 
-  onButtonAddClick () {
-
+  run (payload) {
+    this.props.addMap(payload);
   }
 
   render () {
+    const { maps } = this.props;
     return (
       <div style={styles.content}>
-        <Heightmap />
+        <Showcase style={styles.left} maps={maps} />
+        <Panel style={styles.right} maps={maps} run={(payload) => this.run(payload)} />
       </div>
     );
   }
 }
-// <Switch>
-// {routes.map((route, index) => (
-//   <Route
-//   key={index}
-//   path={route.path}
-//   exact={route.exact}
-//   component={route.component}
-//   />
-// ))}
-// </Switch>
+
+Content.propTypes = {
+  maps: PropTypes.string
+};
+
+const mapStateToProps = (state) => {
+  return {
+    maps: state.heightmap.maps
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addMap: (payload) => {
+      dispatch(actions.addMap(payload));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Content);
