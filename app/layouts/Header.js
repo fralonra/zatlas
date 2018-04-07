@@ -1,21 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import {
-//   Row,
-//   Nav, Navbar, NavbarBrand } from 'reactstrap';
 
-// import { NavLink } from 'APP/components';
-// import { navRoute as routes } from 'APP/routes';
 import { style } from 'APP/config';
 
 const styles = {
   header: {
+    display: 'flex',
+    justifyContent: 'space-between',
     flex: '0 0 auto',
     padding: '1rem',
     background: style.background.header,
     color: style.color.header
+  },
+  brand: {
+
+  },
+  links: {
+
+  },
+  link: {
+    color: 'inherit',
+    textDecoration: 'none'
   }
 };
+
+const brand = 'ZATLAS - Online random heightmap generator.';
+
+const links = [{
+  label: 'View Code on Github',
+  url: 'https://github.com/fralonra/zatlas'
+}];
 
 class Header extends Component {
   constructor (props) {
@@ -31,13 +45,18 @@ class Header extends Component {
     return result;
   }
 
-  onButtonAddClick () {
-
-  }
-
   render () {
     return (
-      <div style={styles.header}>ZATLAS</div>
+      <div style={styles.header}>
+        <div style={styles.brand}>{brand}</div>
+        <div style={styles.links}>
+          {links.map(l => {
+            return (
+              <a style={styles.link} href={l.url}>{l.label}</a>
+            );
+          })}
+        </div>
+      </div>
     );
   }
 }

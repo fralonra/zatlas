@@ -5,13 +5,18 @@ import Footer from './Footer';
 import Panel from './Panel';
 import Showcase from './Showcase';
 
+import Mapcase from './Mapcase';
+
 export {
   // Layouts
   Content,
   Header,
   Footer,
 
-  // Tab
+  // Tabs
   Panel,
-  Showcase
+  Showcase,
+
+  // Others
+  Mapcase
 };

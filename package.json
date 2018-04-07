@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "config": "^1.30.0",
-    "ds-heightmap": "^0.1.2",
+    "ds-heightmap": "^0.1.6",
     "jimp": "^0.2.27",
     "prop-types": "^15.6.1",
     "rc-slider": "^8.6.1",

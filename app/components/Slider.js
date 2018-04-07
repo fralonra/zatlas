@@ -10,7 +10,8 @@ const styles = {
 
   },
   desc: {
-
+    padding: '0.5rem 0',
+    fontSize: '1rem'
   }
 };
 

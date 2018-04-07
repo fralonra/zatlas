@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const heightmap = require('ds-heightmap');
-const Jimp = require('jimp');
 
+import { marksArrToObj } from 'APP/libs';
 import { Corner, Slider } from 'APP/components';
 import { style } from 'APP/config';
 
@@ -14,7 +14,12 @@ const styles = {
     flex: '0 0 450px',
     padding: '1rem',
     background: style.background.panel,
-    color: style.color.panel
+    color: style.color.panel,
+    fontSize: '1.25rem'
+  },
+  desc: {
+    padding: '0.5rem 0',
+    fontSize: '1rem'
   }
 };
 
@@ -22,17 +27,19 @@ const panelItems = {
   power: {
     type: 'slider',
     label: 'Power',
-    desc: '',
+    desc: <span>Determine the size of the map. The map will be as large as 2<sup><i>power</i></sup>x2<sup><i>power</i></sup>.</span>,
     min: 7,
     max: 12,
     defaultValue: 9,
-    marks: marksArrToObj([7, 8, 9, 10, 11, 12, 13]),
+    marks: marksArrToObj([7, 8, 9, 10, 11, 12]),
     onChange: (props) => {
       this.setValue('power', props.value);
     }
   },
   corner: {
     type: 'corner',
+    desc: 'Determine the heights of four corners. They are initial values in diamond-square algorithm.',
+    min: 1,
     defaultValue: [2, 2, 2, 2],
     onChange: (props) => {
       this.setValue('corner', props.value);
@@ -41,40 +48,54 @@ const panelItems = {
   offset: {
     type: 'slider',
     label: 'Offset',
-    desc: '',
-    min: -1,
-    max: 1,
+    desc: 'Designed to effect the overall height of the map.',
+    min: -0.9,
+    max: 0.9,
     step: 0.1,
-    defaultValue: -0.2,
-    marks: marksArrToObj([-1, -0.5, 0, 0.5, 1])
+    defaultValue: 0.2,
+    marks: marksArrToObj([-0.9, -0.5, -0.2, 0, 0.2, 0.5, 0.9])
   },
   range: {
     type: 'slider',
     label: 'Range',
-    desc: '',
-    min: 1,
+    desc: 'All the height values in the map will be within -range to range.',
+    min: 3,
     max: 10,
     defaultValue: 7,
-    marks: marksArrToObj([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    marks: marksArrToObj([3, 4, 5, 6, 7, 8, 9, 10])
   },
   rough: {
     type: 'slider',
     label: 'Rough',
-    desc: '',
-    min: 0,
+    desc: 'Designed to effect the terrain variability (roughness).',
+    min: 0.1,
     max: 0.9,
     step: 0.1,
-    defaultValue: 0.1,
-    marks: marksArrToObj([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
+    defaultValue: 0.8,
+    marks: marksArrToObj([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
+  }
+};
+
+const panelItemsGlobal = {
+  maxMapCount: {
+    type: 'input',
+    label: 'Max Map Count',
+    desc: 'The max number of maps in this page.',
+    min: 12,
+    max: 50,
+    defaultValue: 12
   },
-  smooth: {
+  br: {
+    type: 'br'
+  },
+  seaLevel: {
     type: 'slider',
-    label: 'Smooth',
-    desc: '',
+    label: 'Sea Level',
+    desc: 'The height of sea level.',
     min: 0,
-    max: 3,
-    defaultValue: 3,
-    marks: marksArrToObj([0, 1, 2, 3])
+    max: 10,
+    marks: marksArrToObj([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+    defaultValue: 1
   }
 };
 
@@ -83,12 +104,12 @@ class Panel extends Component {
     super(props);
 
     this.state = {
+      maxMapCount: 12,
       power: panelItems.power.defaultValue,
       corner: panelItems.corner.defaultValue,
       offset: panelItems.offset.defaultValue,
       range: panelItems.range.defaultValue,
-      rough: panelItems.rough.defaultValue,
-      smooth: panelItems.smooth.defaultValue
+      rough: panelItems.rough.defaultValue
     };
   }
 
@@ -98,82 +119,72 @@ class Panel extends Component {
 
   run () {
     const { maps, run } = this.props;
-    if (maps.length >= 12) return alert('Too many maps');
+    if (maps.length >= this.state.maxMapCount) return alert('Maximum number of maps exceeded. You can delete some maps first.');
 
-    const { power, corner, offset, range, rough, smooth } = this.state;
-    heightmap.init(power, { corner, offset, range, rough, smooth });
+    const { power, corner, offset, range, rough } = this.state;
+    heightmap.init(power, { corner, offset, range, rough });
     heightmap.run();
     const raw = heightmap.out();
-    const size = raw.length;
-    new Jimp(size, size, (err, image) => {
-      let max = 0, step = 0;
-      raw.forEach((d, x) => {
-        d.forEach((v, y) => {
-          if (v > max) max = v;
-        });
-      });
-      step = Math.round(max / 4);
-      raw.forEach((d, x) => {
-        d.forEach((v, y) => {
-          image.setPixelColor(colorize(v, step), x, y);
-        });
-      });
-      image.crop(1, 1, size - 2, size - 2);
-      image.getBase64('image/png', (err, jimp) => {
-        run({ raw, jimp });
-      });
-    });
+    run({ raw, factor: { power, corner, offset, range, rough } });
   }
 
   render () {
     return (
       <div style={styles.panel}>
-        {Object.keys(panelItems).map(k => {
-          const p = panelItems[k];
-          p.onChange = (value) => this.setValue(k, value);
-          switch (p.type) {
-            case 'slider':
-              return <Slider {...p}/>;
-              break;
-            case 'corner':
-              p.max = this.state.range;
-              return <Corner {...p}/>;
-              break;
-            default:
-              return;
-          }
-        })}
-        <button onClick={() => this.run()}>Run</button>
+        <div>
+          {Object.keys(panelItems).map(k => {
+            const p = panelItems[k];
+            p.onChange = (value) => this.setValue(k, value);
+            switch (p.type) {
+              case 'slider':
+                return <Slider {...p}/>;
+                break;
+              case 'corner':
+                p.max = this.state.range;
+                return <Corner {...p}/>;
+                break;
+              default:
+                return;
+            }
+          })}
+        </div>
+        <br />
+        <div>
+          {Object.keys(panelItemsGlobal).map(k => {
+            const p = panelItemsGlobal[k];
+            p.onChange = (value) => this.props.setGlobal({ [k]: value });
+            switch (p.type) {
+              case 'br':
+                return <br />;
+                break;
+              case 'slider':
+                return <Slider {...p}/>;
+                break;
+              case 'input':
+                p.defaultValue = this.state.maxMapCount;
+                return (
+                  <div>
+                    <div>{p.label}</div>
+                    <div style={styles.desc}>{p.desc}</div>
+                    <input type="number" min={p.min} max={p.max} value={p.defaultValue} onChange={(e) => this.setValue('maxMapCount', e.target.value)} />
+                  </div>
+                )
+              default:
+                return;
+            }
+          })}
+        </div>
+        <button onClick={() => this.run()}>Generate!</button>
       </div>
     );
   }
 }
 
 Panel.propTypes = {
+  global: PropTypes.object,
   maps: PropTypes.arrayOf(PropTypes.object),
+  setGlobal: PropTypes.func,
   run: PropTypes.func
 };
-
-function marksArrToObj(arr) {
-  const obj = {};
-  arr.forEach(a => {
-    obj[a] = String(a);
-  });
-  return obj;
-}
-
-function colorize(value, step) {
-  return value < 0 ?
-    Jimp.rgbaToInt(0, 0, 255, 255) :
-    value > step ?
-    value > step * 2 ?
-    value > step * 3 ?
-    value > step * 4 ?
-    Jimp.rgbaToInt(255, 0, 0, 255) :
-    Jimp.rgbaToInt(200, 150, 0, 255) :
-    Jimp.rgbaToInt(200, 200, 0, 255) :
-    Jimp.rgbaToInt(55, 200, 0, 255) :
-    Jimp.rgbaToInt(0, 255, 0, 255);
-}
 
 export default Panel;

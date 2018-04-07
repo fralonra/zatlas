@@ -4,13 +4,17 @@ import PropTypes from 'prop-types';
 const styles = {
   wrapper: {
     position: 'relative',
-    width: '100px',
-    height: '100px',
+    width: '70px',
+    height: '70px',
     margin: '1rem',
     background: '#fefefe'
   },
+  desc: {
+    padding: '0.5rem 0',
+    fontSize: '1rem'
+  },
   input: {
-    width: '2.5rem',
+    width: '2rem',
     textAlign: 'center'
   },
   topLeft: {
@@ -58,23 +62,25 @@ class Corner extends Component {
   }
 
   render () {
-    const { min, max, defaultValue } = this.props;
+    const { desc, min, max, defaultValue } = this.props;
     return (
-      <div style={styles.wrapper}>
-        <p>Corner</p>
-        {corners.map((c, i) => {
-          return (
-            <div style={{...styles.input, ...styles[c]}}>
-              <input type="number" min={min} max={max} value={defaultValue[i]} onChange={(e) => this.onChange(e.target.value, i)} />
-            </div>
-          )
-        })}
+      <div>
+        <div>Corner</div>
+        <div style={styles.desc}>{desc}</div>
+        <div style={styles.wrapper}>
+          {corners.map((c, i) => {
+            return (
+              <input style={{...styles.input, ...styles[c]}} type="number" min={min} max={max} value={defaultValue[i]} onChange={(e) => this.onChange(e.target.value, i)} />
+            )
+          })}
+        </div>
       </div>
     );
   }
 }
 
 Corner.propTypes = {
+  desc: PropTypes.string,
   min: PropTypes.number,
   max: PropTypes.number,
   defaultValue: PropTypes.arrayOf(PropTypes.number),

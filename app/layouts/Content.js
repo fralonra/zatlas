@@ -36,24 +36,29 @@ class Content extends Component {
     return (
       <div style={styles.content}>
         <Showcase style={styles.left} maps={maps} />
-        <Panel style={styles.right} maps={maps} run={(payload) => this.run(payload)} />
+        <Panel style={styles.right} maps={maps} setGlobal={(payload) => this.props.setGlobal(payload)} run={(payload) => this.run(payload)} />
       </div>
     );
   }
 }
 
 Content.propTypes = {
+  seaLevel: PropTypes.number,
   maps: PropTypes.string
 };
 
 const mapStateToProps = (state) => {
   return {
+    seaLevel: state.heightmap.seaLevel,
     maps: state.heightmap.maps
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setGlobal: (payload) => {
+      dispatch(actions.setGlobal(payload));
+    },
     addMap: (payload) => {
       dispatch(actions.addMap(payload));
     }

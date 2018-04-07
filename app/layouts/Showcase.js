@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import actions from 'APP/store/actions';
-import { Heightmap } from 'APP/components';
+import { Mapcase } from 'APP/layouts';
 
 const styles = {
   showcase: {
@@ -10,9 +9,24 @@ const styles = {
     flexWrap: 'wrap',
     flex: '1 1 auto',
     alignItems: 'start',
-    padding: '1rem',
     textAlign: 'center',
     overflowY: 'auto'
+  },
+  intro: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    padding: '1rem',
+    color: '#565656',
+    fontSize: '3rem',
+    fontWeight: 'bold'
+  },
+  introTitle: {
+
+  },
+  introDetail: {
+    textAlign: 'left'
   },
   case: {
     width: '33%'
@@ -28,9 +42,20 @@ class Showcase extends Component {
     const { maps } = this.props;
     return (
       <div style={styles.showcase}>
-        {maps.map(m => {
+        {maps.length === 0 && (
+          <div style={styles.intro}>
+            <div>
+              <p style={styles.introTitle}>INTRO</p>
+              <p style={styles.introDetail}>
+                <div>A random heightmap generator using diamond-square algorithm.</div>
+                <div>Click on the right to start your trip.</div>
+              </p>
+            </div>
+          </div>
+        )}
+        {maps.map((m, i) => {
           return (
-            <Heightmap style={styles.case} map={m.jimp} />
+            <Mapcase style={styles.case} index={i} map={m}/>
           );
         })}
       </div>
