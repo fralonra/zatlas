@@ -3,12 +3,79 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
 #app {
   height: 100%;
 }
 
+#content {
+  display: flex;
+  flex-flow: row;
+  @media (max-width: 1024px) {
+    flex-flow: column;
+  }
+}
+
+#showcase {
+  flex: 1 1 auto;
+  @media (max-width: 1024px) {
+    flex: 0 0 66%;
+  }
+}
+
+#panel {
+  position: relative;
+  flex: 0 0 450px;
+  @media (max-width: 1024px) {
+    flex: 0 0 34%;
+  }
+}
+
+// EXTERNAL COMPONENT
 .rc-slider-mark {
   &-text-active {
     color: #ffff00;
+  }
+}
+
+// NORMAL COMPONENT
+.button {
+  border: 0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.input {
+  border: 0;
+}
+
+// PAGE COMPONENT
+.showcase-info {
+  font-size: 3rem;
+  @media (max-width: 1024px) {
+    font-size: 1.5rem;
+  }
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+.showcase-case {
+  width: 33%;
+  @media (max-width: 768px) {
+    width: 50%;
+  }
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+}
+
+.panel-controller-button {
+  padding: 0.5rem;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  @media (max-width: 768px) {
+    padding: 0.35rem;
+    font-size: 1rem;
   }
 }

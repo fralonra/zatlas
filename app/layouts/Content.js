@@ -8,17 +8,9 @@ import { style } from 'APP/config';
 
 const styles = {
   content: {
-    display: 'flex',
-    flexFlow: 'row',
-    flex: '1 1 auto',
+    height: '100%',
     background: style.background.content,
     color: style.color.content
-  },
-  left: {
-
-  },
-  right: {
-
   }
 };
 
@@ -31,12 +23,16 @@ class Content extends Component {
     this.props.addMap(payload);
   }
 
+  clear () {
+    this.props.clearMap();
+  }
+
   render () {
     const { maps } = this.props;
     return (
-      <div style={styles.content}>
-        <Showcase style={styles.left} maps={maps} />
-        <Panel style={styles.right} maps={maps} setGlobal={(payload) => this.props.setGlobal(payload)} run={(payload) => this.run(payload)} />
+      <div id="content" style={styles.content}>
+        <Showcase maps={maps} />
+        <Panel maps={maps} setGlobal={(payload) => this.props.setGlobal(payload)} run={(payload) => this.run(payload)} clear={() => this.clear()} />
       </div>
     );
   }
@@ -61,11 +57,16 @@ const mapDispatchToProps = (dispatch) => {
     },
     addMap: (payload) => {
       dispatch(actions.addMap(payload));
+    },
+    clearMap: () => {
+      dispatch(actions.clearMap());
     }
   };
 };
 
-export default connect(
+Content = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Content);
+
+export default Content;

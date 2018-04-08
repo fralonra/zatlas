@@ -7,19 +7,17 @@ const styles = {
   showcase: {
     display: 'flex',
     flexWrap: 'wrap',
-    flex: '1 1 auto',
     alignItems: 'start',
     textAlign: 'center',
     overflowY: 'auto'
   },
   intro: {
     display: 'flex',
-    justifyContent: 'center',
+    flexFlow: 'column',
     alignItems: 'center',
     width: '100%',
     padding: '1rem',
     color: '#565656',
-    fontSize: '3rem',
     fontWeight: 'bold'
   },
   introTitle: {
@@ -29,7 +27,7 @@ const styles = {
     textAlign: 'left'
   },
   case: {
-    width: '33%'
+
   }
 };
 
@@ -41,21 +39,21 @@ class Showcase extends Component {
   render () {
     const { maps } = this.props;
     return (
-      <div style={styles.showcase}>
+      <div id="showcase" style={styles.showcase}>
         {maps.length === 0 && (
-          <div style={styles.intro}>
-            <div>
-              <p style={styles.introTitle}>INTRO</p>
-              <p style={styles.introDetail}>
-                <div>A random heightmap generator using diamond-square algorithm.</div>
-                <div>Click on the right to start your trip.</div>
-              </p>
-            </div>
+          <div className="showcase-info" style={styles.intro}>
+            <p style={styles.introTitle}>INTRO</p>
+            <p style={styles.introDetail}>
+              <div>A random heightmap generator using diamond-square algorithm.</div>
+              <div>Click on the right to start your trip.</div>
+            </p>
           </div>
         )}
         {maps.map((m, i) => {
           return (
-            <Mapcase style={styles.case} index={i} map={m}/>
+            <div className="showcase-case" style={styles.case}>
+              <Mapcase index={i} map={m}/>
+            </div>
           );
         })}
       </div>

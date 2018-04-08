@@ -26,6 +26,10 @@ const reducers = (state = initialState, action) => {
       return Object.assign({}, state, {
         maps
       });
+    case actions.CLEAR_MAP:
+      return Object.assign({}, state, {
+        maps: []
+      });
     default:
       return state;
   }

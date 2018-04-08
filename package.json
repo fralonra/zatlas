@@ -13,11 +13,13 @@
     "ds-heightmap": "^0.1.6",
     "jimp": "^0.2.27",
     "prop-types": "^15.6.1",
+    "radium": "^0.24.0",
     "rc-slider": "^8.6.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "react-hot-loader": "^4.0.0",
     "react-redux": "^5.0.7",
+    "react-responsive": "^4.1.0",
     "reactstrap": "^5.0.0",
     "redux": "^3.7.2"
   },

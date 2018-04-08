@@ -3,43 +3,27 @@ import PropTypes from 'prop-types';
 
 const styles = {
   wrapper: {
-    position: 'relative',
-    width: '70px',
-    height: '70px',
-    margin: '1rem',
-    background: '#fefefe'
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: '1rem 0',
+    marginTop: '0.25rem'
   },
   desc: {
     padding: '0.5rem 0',
     fontSize: '1rem'
   },
+  label: {
+    fontSize: '1rem'
+  },
   input: {
     width: '2rem',
+    marginLeft: '0.5rem',
+    marginRight: '1rem',
     textAlign: 'center'
-  },
-  topLeft: {
-    position: 'absolute',
-    top: 0,
-    left: 0
-  },
-  topRight: {
-    position: 'absolute',
-    top: 0,
-    right: 0
-  },
-  bottomRight: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0
-  },
-  bottomLeft: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0
   }
 };
 
-const corners = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
+const corners = ['top-left', 'top-right', 'bottom-right', 'bottom-left'];
 
 class Corner extends Component {
   constructor (props) {
@@ -70,7 +54,10 @@ class Corner extends Component {
         <div style={styles.wrapper}>
           {corners.map((c, i) => {
             return (
-              <input style={{...styles.input, ...styles[c]}} type="number" min={min} max={max} value={defaultValue[i]} onChange={(e) => this.onChange(e.target.value, i)} />
+              <span>
+                <label style={styles.label}>{c}</label>
+                <input className="input" style={styles.input} type="number" min={min} max={max} value={defaultValue[i]} onChange={(e) => this.onChange(e.target.value, i)} />
+              </span>
             )
           })}
         </div>

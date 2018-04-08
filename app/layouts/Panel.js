@@ -11,15 +11,39 @@ import 'rc-slider/assets/index.css';
 
 const styles = {
   panel: {
-    flex: '0 0 450px',
+    display: 'flex',
+    flexFlow: 'column',
     padding: '1rem',
     background: style.background.panel,
     color: style.color.panel,
     fontSize: '1.25rem'
   },
+  controller: {
+    display: 'flex',
+    flexFlow: 'row',
+    flex: '0 0 auto',
+    padding: '0.5rem'
+  },
+  main: {
+    flex: '0 1 auto',
+    height: '100%',
+    padding: '0 0.5rem',
+    paddingBottom: '2rem',
+    overflowY: 'auto'
+  },
   desc: {
     padding: '0.5rem 0',
+    paddingBottom: '1rem',
     fontSize: '1rem'
+  },
+  buttonRun: {
+
+  },
+  buttonClear: {
+
+  },
+  options: {
+    marginTop: '1rem'
   }
 };
 
@@ -29,9 +53,9 @@ const panelItems = {
     label: 'Power',
     desc: <span>Determine the size of the map. The map will be as large as 2<sup><i>power</i></sup>x2<sup><i>power</i></sup>.</span>,
     min: 7,
-    max: 12,
+    max: 11,
     defaultValue: 9,
-    marks: marksArrToObj([7, 8, 9, 10, 11, 12]),
+    marks: marksArrToObj([7, 8, 9, 10, 11]),
     onChange: (props) => {
       this.setValue('power', props.value);
     }
@@ -128,53 +152,60 @@ class Panel extends Component {
     run({ raw, factor: { power, corner, offset, range, rough } });
   }
 
+  clear () {
+    const { maps, clear } = this.props;
+    if (maps.length > 0) clear();
+  }
+
   render () {
     return (
-      <div style={styles.panel}>
-        <div>
-          {Object.keys(panelItems).map(k => {
-            const p = panelItems[k];
-            p.onChange = (value) => this.setValue(k, value);
-            switch (p.type) {
-              case 'slider':
-                return <Slider {...p}/>;
-                break;
-              case 'corner':
-                p.max = this.state.range;
-                return <Corner {...p}/>;
-                break;
-              default:
-                return;
-            }
-          })}
+      <div id="panel" style={styles.panel}>
+        <div style={styles.controller}>
+          <button id="panel-controller-button-run" className="button panel-controller-button" style={styles.buttonRun} onClick={() => this.run()}>Generate!</button>
+          <button id="panel-controller-button-clear" className="button panel-controller-button" style={styles.buttonClear} onClick={() => this.clear()}>Clear</button>
         </div>
-        <br />
-        <div>
-          {Object.keys(panelItemsGlobal).map(k => {
-            const p = panelItemsGlobal[k];
-            p.onChange = (value) => this.props.setGlobal({ [k]: value });
-            switch (p.type) {
-              case 'br':
-                return <br />;
-                break;
-              case 'slider':
-                return <Slider {...p}/>;
-                break;
-              case 'input':
-                p.defaultValue = this.state.maxMapCount;
-                return (
-                  <div>
-                    <div>{p.label}</div>
-                    <div style={styles.desc}>{p.desc}</div>
-                    <input type="number" min={p.min} max={p.max} value={p.defaultValue} onChange={(e) => this.setValue('maxMapCount', e.target.value)} />
-                  </div>
-                )
-              default:
-                return;
-            }
-          })}
+        <div style={styles.main}>
+          <small>Scroll down if you cannot see all options.</small>
+          <div style={styles.options}>
+            {Object.keys(panelItems).map(k => {
+              const p = panelItems[k];
+              p.onChange = (value) => this.setValue(k, value);
+              switch (p.type) {
+                case 'slider':
+                  return <Slider {...p}/>;
+                case 'corner':
+                  p.max = this.state.range;
+                  return <Corner {...p}/>;
+                default:
+                  return;
+              }
+            })}
+          </div>
+          <br />
+          <div style={styles.options}>
+            {Object.keys(panelItemsGlobal).map(k => {
+              const p = panelItemsGlobal[k];
+              p.onChange = (value) => this.props.setGlobal({ [k]: value });
+              switch (p.type) {
+                case 'br':
+                  return <br />;
+                case 'slider':
+                  return <Slider {...p}/>;
+                case 'input':
+                  p.defaultValue = this.state.maxMapCount;
+                  return (
+                    <div>
+                      <div>{p.label}</div>
+                      <div style={styles.desc}>{p.desc}</div>
+                      <input className="input" type="number" min={p.min} max={p.max} value={p.defaultValue} onChange={(e) => this.setValue('maxMapCount', e.target.value)} />
+                    </div>
+                  )
+                default:
+                  return;
+              }
+            })}
+          </div>
         </div>
-        <button onClick={() => this.run()}>Generate!</button>
       </div>
     );
   }
@@ -184,7 +215,8 @@ Panel.propTypes = {
   global: PropTypes.object,
   maps: PropTypes.arrayOf(PropTypes.object),
   setGlobal: PropTypes.func,
-  run: PropTypes.func
+  run: PropTypes.func,
+  clear: PropTypes.func
 };
 
 export default Panel;

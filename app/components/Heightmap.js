@@ -50,11 +50,9 @@ class Heightmap extends Component {
 
   colorize (value, factor) {
     const { interval, seaLevel, colors } = factor;
-    // console.log(value, seaLevel);
     if (value <= seaLevel) return colors[0];
     let level = Math.round((value - (seaLevel > 0 ? seaLevel : 0)) / interval);
     if (level > colors.length - 1) level = colors.length - 1;
-    // console.log(seaLevel, interval, value, level);
     return colors[level];
   }
 

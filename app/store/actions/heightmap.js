@@ -1,7 +1,8 @@
 export const types = {
   SET_GLOBAL: 'SET_GLOBAL',
   ADD_MAP: 'ADD_MAP',
-  DEL_MAP: 'DEL_MAP'
+  DEL_MAP: 'DEL_MAP',
+  CLEAR_MAP: 'CLEAR_MAP'
 };
 
 const actions = {
@@ -21,6 +22,11 @@ const actions = {
     return {
       type: types.DEL_MAP,
       payload
+    };
+  },
+  clearMap () {
+    return {
+      type: types.CLEAR_MAP
     };
   }
 };
