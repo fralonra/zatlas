@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-const Jimp = require('jimp');
+import Jimp from 'jimp';
 
 const styles = {
   wrapper: {
@@ -32,7 +31,6 @@ class Heightmap extends Component {
       const land = range - sea;
       const step = land > colors.length ? colors.length - 1: land;
       const interval = land / step;
-      // console.log(seaLevel, land, step, interval);
       map.forEach((d, x) => {
         d.forEach((v, y) => {
           image.setPixelColor(this.colorize(v, {

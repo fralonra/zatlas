@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-const heightmap = require('ds-heightmap');
+import heightmap from 'ds-heightmap';
 
 import { marksArrToObj } from 'APP/libs';
 import { Corner, Slider } from 'APP/components';
@@ -16,7 +15,8 @@ const styles = {
     padding: '1rem',
     background: style.background.panel,
     color: style.color.panel,
-    fontSize: '1.25rem'
+    fontSize: '1.25rem',
+    overflowY: 'auto'
   },
   controller: {
     display: 'flex',
@@ -28,7 +28,6 @@ const styles = {
     flex: '0 1 auto',
     height: '100%',
     padding: '0 0.5rem',
-    paddingBottom: '2rem',
     overflowY: 'auto'
   },
   desc: {
@@ -43,6 +42,7 @@ const styles = {
 
   },
   options: {
+    paddingBottom: '2rem',
     marginTop: '1rem'
   }
 };
@@ -181,7 +181,6 @@ class Panel extends Component {
               }
             })}
           </div>
-          <br />
           <div style={styles.options}>
             {Object.keys(panelItemsGlobal).map(k => {
               const p = panelItemsGlobal[k];
