@@ -8,6 +8,7 @@ import store from 'APP/store';
 import { Content, Header, Footer } from 'APP/layouts';
 import { global } from 'APP/config';
 
+import 'NODE/normalize.css//normalize.css';
 import 'APP/styles/main.less';
 
 const styles = {

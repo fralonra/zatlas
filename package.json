@@ -12,6 +12,7 @@
     "config": "^1.30.0",
     "ds-heightmap": "^0.1.6",
     "jimp": "^0.2.27",
+    "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",
     "radium": "^0.24.0",
     "rc-slider": "^8.6.1",

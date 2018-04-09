@@ -33,7 +33,8 @@ module.exports = {
   resolve: {
     alias: {
       'ROOT': path.resolve(__dirname, '..'),
-      'APP': path.resolve(__dirname, '../app')
+      'APP': path.resolve(__dirname, '../app'),
+      'NODE': path.resolve(__dirname, '../node_modules')
     }
   },
   node: {
