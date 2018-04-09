@@ -47,6 +47,14 @@ html, body {
 
 .input {
   border: 0;
+  font-size: 1rem;
+  &[type=number] {
+    -moz-appearance: textfield;
+    margin: 0;
+  }
+  &[type="number"]:hover, &[type="number"]:focus {
+    -moz-appearance: number-input;
+  }
 }
 
 // PAGE COMPONENT

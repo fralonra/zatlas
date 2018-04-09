@@ -28,9 +28,6 @@ module.exports = merge(webpackBaseConfig, {
     }
   },
   plugins: [
-    // new CleanWebpackPlugin([config.dirDes], {
-    //   root: config.dirRoot
-    // }),
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
