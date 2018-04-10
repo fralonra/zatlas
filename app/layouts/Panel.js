@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import MediaQuery from 'react-responsive';
+import { Menu } from 'react-feather';
 import PropTypes from 'prop-types';
 import heightmap from 'ds-heightmap';
 
 import { marksArrToObj } from 'APP/libs';
 import { Corner, Slider } from 'APP/components';
-import { style } from 'APP/config';
+import { global, style } from 'APP/config';
 
 import 'rc-slider/assets/index.css';
 
@@ -21,14 +23,17 @@ const styles = {
   controller: {
     display: 'flex',
     flexFlow: 'row',
+    justifyContent: 'space-between',
     flex: '0 0 auto',
     padding: '0.5rem'
   },
   main: {
-    flex: '0 1 auto',
     height: '100%',
     padding: '0 0.5rem',
     overflowY: 'auto'
+  },
+  mainHidden: {
+    display: 'none'
   },
   desc: {
     padding: '0.5rem 0',
@@ -128,6 +133,7 @@ class Panel extends Component {
     super(props);
 
     this.state = {
+      hidden: false,
       maxMapCount: 12,
       power: panelItems.power.defaultValue,
       corner: panelItems.corner.defaultValue,
@@ -135,6 +141,8 @@ class Panel extends Component {
       range: panelItems.range.defaultValue,
       rough: panelItems.rough.defaultValue
     };
+
+    this.main = this.main.bind(this);
   }
 
   setValue (key, value) {
@@ -157,54 +165,72 @@ class Panel extends Component {
     if (maps.length > 0) clear();
   }
 
+  toggle () {
+    this.setState((prevState, props) => ({
+      hidden: !prevState.hidden
+    }));
+  }
+
+  main () {
+    return (
+      <div id="panel-main" style={this.state.hidden ? {...styles.main, ...styles.mainHidden} : styles.main}>
+        <small className="warning">Scroll down if you cannot see all options.</small>
+        <div style={styles.options}>
+          {Object.keys(panelItems).map(k => {
+            const p = panelItems[k];
+            p.onChange = (value) => this.setValue(k, value);
+            switch (p.type) {
+              case 'slider':
+                return <Slider {...p}/>;
+              case 'corner':
+                p.max = this.state.range;
+                return <Corner {...p}/>;
+              default:
+                return;
+            }
+          })}
+        </div>
+        <div style={styles.options}>
+          {Object.keys(panelItemsGlobal).map(k => {
+            const p = panelItemsGlobal[k];
+            p.onChange = (value) => this.props.setGlobal({ [k]: value });
+            switch (p.type) {
+              case 'br':
+                return <br />;
+              case 'slider':
+                return <Slider {...p}/>;
+              case 'input':
+                p.defaultValue = this.state.maxMapCount;
+                return (
+                  <div>
+                    <div>{p.label}</div>
+                    <div style={styles.desc}>{p.desc}</div>
+                    <input className="input" type="number" min={p.min} max={p.max} value={p.defaultValue} onChange={(e) => this.setValue('maxMapCount', e.target.value)} />
+                  </div>
+                )
+              default:
+                return;
+            }
+          })}
+        </div>
+      </div>
+    );
+  }
+
   render () {
+    const Main = this.main;
     return (
       <div id="panel" style={styles.panel}>
         <div style={styles.controller}>
-          <button id="panel-controller-button-run" className="button panel-controller-button" style={styles.buttonRun} onClick={() => this.run()}>Generate!</button>
-          <button id="panel-controller-button-clear" className="button panel-controller-button" style={styles.buttonClear} onClick={() => this.clear()}>Clear</button>
-        </div>
-        <div style={styles.main}>
-          <small>Scroll down if you cannot see all options.</small>
-          <div style={styles.options}>
-            {Object.keys(panelItems).map(k => {
-              const p = panelItems[k];
-              p.onChange = (value) => this.setValue(k, value);
-              switch (p.type) {
-                case 'slider':
-                  return <Slider {...p}/>;
-                case 'corner':
-                  p.max = this.state.range;
-                  return <Corner {...p}/>;
-                default:
-                  return;
-              }
-            })}
+          <div>
+            <button id="panel-controller-button-run" className="button panel-controller-button" style={styles.buttonRun} onClick={() => this.run()}>Generate!</button>
+            <button id="panel-controller-button-clear" className="button panel-controller-button" style={styles.buttonClear} onClick={() => this.clear()}>Clear</button>
           </div>
-          <div style={styles.options}>
-            {Object.keys(panelItemsGlobal).map(k => {
-              const p = panelItemsGlobal[k];
-              p.onChange = (value) => this.props.setGlobal({ [k]: value });
-              switch (p.type) {
-                case 'br':
-                  return <br />;
-                case 'slider':
-                  return <Slider {...p}/>;
-                case 'input':
-                  p.defaultValue = this.state.maxMapCount;
-                  return (
-                    <div>
-                      <div>{p.label}</div>
-                      <div style={styles.desc}>{p.desc}</div>
-                      <input className="input" type="number" min={p.min} max={p.max} value={p.defaultValue} onChange={(e) => this.setValue('maxMapCount', e.target.value)} />
-                    </div>
-                  )
-                default:
-                  return;
-              }
-            })}
-          </div>
+          <MediaQuery maxDeviceWidth={global.cssMediaBp[0]}>
+            <Menu className="icon-button" onClick={() => this.toggle()} />
+          </MediaQuery>
         </div>
+        <Main />
       </div>
     );
   }

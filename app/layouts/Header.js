@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Github } from 'react-feather';
 
 import { style } from 'APP/config';
 
@@ -28,7 +29,8 @@ const brand = 'ZATLAS - Online random heightmap generator.';
 
 const links = [{
   label: 'View Code on Github',
-  url: 'https://github.com/fralonra/zatlas'
+  url: 'https://github.com/fralonra/zatlas',
+  icon: <Github className="icon-button" />
 }];
 
 class Header extends Component {
@@ -52,7 +54,10 @@ class Header extends Component {
         <div style={styles.links}>
           {links.map(l => {
             return (
-              <a style={styles.link} href={l.url}>{l.label}</a>
+              <a style={styles.link} href={l.url}>{l.icon ?
+                l.icon :
+                l.label}
+              </a>
             );
           })}
         </div>

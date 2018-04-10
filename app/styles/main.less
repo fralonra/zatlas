@@ -19,7 +19,7 @@ html, body {
 #showcase {
   flex: 1 1 auto;
   @media (max-width: 1024px) {
-    flex: 0 0 66%;
+    flex: 1 0 auto;
   }
 }
 
@@ -27,7 +27,13 @@ html, body {
   position: relative;
   flex: 0 0 450px;
   @media (max-width: 1024px) {
-    flex: 0 0 34%;
+    flex: 0 0 auto;
+  }
+  #panel-main {
+    flex: 0 0 auto;
+    @media (max-width: 1024px) {
+      flex: 0 1 200px;
+    }
   }
 }
 
@@ -45,6 +51,10 @@ html, body {
   cursor: pointer;
 }
 
+.icon-button {
+  cursor: pointer;
+}
+
 .input {
   border: 0;
   font-size: 1rem;
@@ -55,6 +65,11 @@ html, body {
   &[type="number"]:hover, &[type="number"]:focus {
     -moz-appearance: number-input;
   }
+}
+
+.warning {
+  color: yellow;
+  font-size: 0.8rem;
 }
 
 // PAGE COMPONENT

@@ -4,7 +4,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpackBaseConfig = require('./webpack.config.base.js');
 
-const config = require('config');
+const config = require('./config');
+
 module.exports = merge(webpackBaseConfig, {
   optimization: {
     splitChunks: {
@@ -28,6 +29,9 @@ module.exports = merge(webpackBaseConfig, {
     }
   },
   plugins: [
+    new CleanWebpackPlugin([config.dirDes], {
+      root: config.dirRoot
+    }),
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
