@@ -3,18 +3,16 @@
   "version": "0.1.0",
   "description": "zatlas",
   "scripts": {
-    "start": "node index.js",
     "build": "webpack --mode production ./app/index.js --config build/webpack.config.prod.js",
     "dev": "webpack-dev-server --mode development ./app/index.js --config build/webpack.config.dev.js",
     "watch": "webpack --mode production ./app/index.js --config build/webpack.config.prod.js --watch"
   },
   "dependencies": {
     "config": "^1.30.0",
-    "ds-heightmap": "^0.1.6",
+    "ds-heightmap": "^0.2.0",
     "jimp": "^0.2.27",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",
-    "radium": "^0.24.0",
     "rc-slider": "^8.6.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MediaQuery from 'react-responsive';
 import { Menu } from 'react-feather';
 import PropTypes from 'prop-types';
-import heightmap from 'ds-heightmap';
+import { ds } from 'ds-heightmap';
 
 import { marksArrToObj } from 'APP/libs';
 import { Corner, Slider } from 'APP/components';
@@ -154,9 +154,7 @@ class Panel extends Component {
     if (maps.length >= this.state.maxMapCount) return alert('Maximum number of maps exceeded. You can delete some maps first.');
 
     const { power, corner, offset, range, rough } = this.state;
-    heightmap.init(power, { corner, offset, range, rough });
-    heightmap.run();
-    const raw = heightmap.out();
+    const raw = ds(power, { corner, offset, range, rough });
     run({ raw, factor: { power, corner, offset, range, rough } });
   }
 

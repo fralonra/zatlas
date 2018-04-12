@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Github } from 'react-feather';
 
 import { style } from 'APP/config';
@@ -25,7 +24,7 @@ const styles = {
   }
 };
 
-const brand = 'ZATLAS - Online random heightmap generator.';
+const brand = 'Zatlas - Online random heightmap generator.';
 
 const links = [{
   label: 'View Code on Github',
@@ -66,12 +65,4 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-
-  };
-};
-
-export default connect(
-  mapStateToProps
-)(Header);
+export default Header;

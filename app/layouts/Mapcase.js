@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Heightmap } from 'APP/components';
+import { ImageScene, Heightmap } from 'APP/components';
 import actions from 'APP/store/actions';
+import { style } from 'APP/config';
 
 const styles = {
   wrapper: {
   },
   case: {
-    padding: '0.5rem 1rem'
+    padding: '0.5rem 1rem',
+    cursor: 'zoom-in'
   },
   info: {
     textAlign: 'left'
@@ -21,8 +23,17 @@ class Mapcase extends Component {
     super(props);
 
     this.state = {
-      global: props.global
+      global: props.global,
+      imageScene: false,
+      imageSceneSrc: ''
     };
+  }
+
+  toggleImageScene (imageSceneSrc) {
+    this.setState((prevState, props) => ({
+      imageScene: !prevState.imageScene,
+      imageSceneSrc
+    }));
   }
 
   delete () {
@@ -31,10 +42,12 @@ class Mapcase extends Component {
 
   render () {
     const { style, map, global } = this.props;
+    const { imageScene, imageSceneSrc } = this.state;
     const { factor } = map;
     return (
       <div style={{...style, ...styles.wrapper}}>
-        <Heightmap style={styles.case} map={map.raw} range={factor.range} global={global}/>
+        {imageScene && <ImageScene src={imageSceneSrc} onClick={() => this.toggleImageScene('')}/>}
+        <Heightmap style={styles.case} map={map.raw} range={factor.range} global={global} onClick={(src) => this.toggleImageScene(src)}/>
         <button onClick={() => this.delete()}>Delete</button>
         <div style={styles.info}>
           <ul>

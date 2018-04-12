@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Jimp from 'jimp';
 
+import './index.less';
+
 const styles = {
   wrapper: {
   },
   map: {
-    width: '100%',
-    height: 'auto',
+
   }
 };
 
@@ -59,10 +60,11 @@ class Heightmap extends Component {
   }
 
   render () {
-    const { style } = this.props;
+    const { style, onClick } = this.props;
+    const { jimp } = this.state;
     return (
-      <div style={{...style, ...styles.wrapper}}>
-        <img style={styles.map} src={this.state.jimp} />
+      <div className="heightmap-wrapper" style={style}>
+        <img className="heightmap-map" src={jimp} onClick={() => onClick(jimp)}/>
       </div>
     );
   }
@@ -71,7 +73,12 @@ class Heightmap extends Component {
 Heightmap.propTypes = {
   map: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   range: PropTypes.number,
-  global: PropTypes.object
+  global: PropTypes.object,
+  onClick: PropTypes.func
 };
+
+Heightmap.defaultProps = {
+  onClick (jimp) {}
+}
 
 export default Heightmap;

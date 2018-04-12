@@ -10,6 +10,9 @@ const style = {
     header: '#eeeeee',
     footer: '#ffffff',
     panel: '#efefef'
+  },
+  boxShadow: {
+    mapCase: '#2288ee'
   }
 };
 
