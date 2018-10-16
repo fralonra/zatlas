@@ -164,7 +164,7 @@ class Panel extends Component {
   }
 
   toggle () {
-    this.setState((prevState, props) => ({
+    this.setState(prevState => ({
       hidden: !prevState.hidden
     }));
   }

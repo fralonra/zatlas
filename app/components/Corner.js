@@ -35,7 +35,7 @@ class Corner extends Component {
   }
 
   onChange (value, index) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       const cornersNew = prevState.corners;
       cornersNew[index] = Number(value);
       return {

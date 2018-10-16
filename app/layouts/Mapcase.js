@@ -30,7 +30,7 @@ class Mapcase extends Component {
   }
 
   toggleImageScene (imageSceneSrc) {
-    this.setState((prevState, props) => ({
+    this.setState(prevState => ({
       imageScene: !prevState.imageScene,
       imageSceneSrc
     }));
