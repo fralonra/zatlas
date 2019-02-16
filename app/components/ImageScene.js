@@ -23,7 +23,7 @@ const styles = {
     color: '#eeeeee'
   },
   image: {
-    maxWidth: '100%'
+    margin: 'auto'
   }
 };
 
