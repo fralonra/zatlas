@@ -6,10 +6,6 @@ import store from './store'
 import { Content, Header } from './layouts'
 import { global } from './config'
 
-import 'normalize.css/normalize.css'
-import './App.css'
-import './styles/main.scss'
-
 const styles = {
   app: {
     display: 'flex',

@@ -4,7 +4,7 @@ html, body {
   padding: 0;
 }
 
-#app {
+#root {
   height: 100%;
 }
 
@@ -71,7 +71,7 @@ html, body {
 
 // PAGE COMPONENT
 .showcase-info {
-  font-size: 3rem;
+  font-size: 2rem;
   @media (max-width: 1024px) {
     font-size: 1.5rem;
   }
