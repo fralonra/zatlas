@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/zatlas/static/css/main.fb63f005.chunk.css",
+    "main.js": "/zatlas/static/js/main.15a36740.chunk.js",
+    "main.js.map": "/zatlas/static/js/main.15a36740.chunk.js.map",
+    "runtime-main.js": "/zatlas/static/js/runtime-main.97694846.js",
+    "runtime-main.js.map": "/zatlas/static/js/runtime-main.97694846.js.map",
+    "static/css/2.aa6f77e2.chunk.css": "/zatlas/static/css/2.aa6f77e2.chunk.css",
+    "static/js/2.d1140198.chunk.js": "/zatlas/static/js/2.d1140198.chunk.js",
+    "static/js/2.d1140198.chunk.js.map": "/zatlas/static/js/2.d1140198.chunk.js.map",
+    "index.html": "/zatlas/index.html",
+    "precache-manifest.9b4be9cd343f2c8dafee6a2271109ace.js": "/zatlas/precache-manifest.9b4be9cd343f2c8dafee6a2271109ace.js",
+    "service-worker.js": "/zatlas/service-worker.js",
+    "static/css/2.aa6f77e2.chunk.css.map": "/zatlas/static/css/2.aa6f77e2.chunk.css.map",
+    "static/css/main.fb63f005.chunk.css.map": "/zatlas/static/css/main.fb63f005.chunk.css.map",
+    "static/js/2.d1140198.chunk.js.LICENSE": "/zatlas/static/js/2.d1140198.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.97694846.js",
+    "static/css/2.aa6f77e2.chunk.css",
+    "static/js/2.d1140198.chunk.js",
+    "static/css/main.fb63f005.chunk.css",
+    "static/js/main.15a36740.chunk.js"
+  ]
+}
