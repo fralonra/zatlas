@@ -8,7 +8,6 @@ import { style } from '../config'
 
 const styles = {
   content: {
-    height: '100%',
     background: style.background.content,
     color: style.color.content
   }

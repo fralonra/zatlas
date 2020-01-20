@@ -1,36 +1,30 @@
 html, body {
-  height: 100%;
   margin: 0;
-  padding: 0;
 }
 
 #root {
-  height: 100%;
+  height: 100vh;
 }
 
 #content {
   display: flex;
-  flex-flow: row;
+  flex: 1;
+  min-height: 0;
   @media (max-width: 1024px) {
     flex-flow: column;
+    overflow-y: auto;
   }
 }
 
 #showcase {
-  flex: 1 1 auto;
+  flex: 1;
 }
 
 #panel {
   position: relative;
   flex: 0 0 450px;
   @media (max-width: 1024px) {
-    flex: 0 0 auto;
-  }
-  #panel-main {
-    flex: 0 0 auto;
-    @media (max-width: 1024px) {
-      flex: 0 1 200px;
-    }
+    flex: 0 0 30%;
   }
 }
 

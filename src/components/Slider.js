@@ -6,9 +6,6 @@ const styles = {
   slider: {
     marginBottom: '2rem'
   },
-  label: {
-
-  },
   desc: {
     padding: '0.5rem 0',
     fontSize: '1rem'

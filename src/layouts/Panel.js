@@ -8,13 +8,11 @@ import { marksArrToObj } from '../libs'
 import { Corner, Slider } from '../components'
 import { global, style } from '../config'
 
-import 'rc-slider/assets/index.css'
-
 const styles = {
   panel: {
     display: 'flex',
     flexFlow: 'column',
-    padding: '1rem',
+    // padding: '1rem',
     background: style.background.panel,
     color: style.color.panel,
     fontSize: '1.25rem',
@@ -25,11 +23,12 @@ const styles = {
     flexFlow: 'row',
     justifyContent: 'space-between',
     flex: '0 0 auto',
-    padding: '0.5rem'
+    padding: '1rem'
   },
   main: {
+    flex: 1,
     height: '100%',
-    padding: '0 0.5rem',
+    padding: '1rem',
     overflowY: 'auto'
   },
   mainHidden: {
@@ -40,15 +39,8 @@ const styles = {
     paddingBottom: '1rem',
     fontSize: '1rem'
   },
-  buttonRun: {
-
-  },
-  buttonClear: {
-
-  },
   options: {
-    paddingBottom: '2rem',
-    marginTop: '1rem'
+    marginTop: '2rem'
   }
 }
 
@@ -173,7 +165,7 @@ class Panel extends Component {
     return (
       <div id='panel-main' style={this.state.hidden ? { ...styles.main, ...styles.mainHidden } : styles.main}>
         <small className='warning'>Scroll down if you cannot see all options.</small>
-        <div style={styles.options}>
+        <fieldset style={styles.options}>
           {Object.keys(panelItems).map(k => {
             const p = panelItems[k]
             p.onChange = (value) => this.setValue(k, value)
@@ -187,8 +179,8 @@ class Panel extends Component {
                 return null
             }
           })}
-        </div>
-        <div style={styles.options}>
+        </fieldset>
+        <fieldset style={styles.options}>
           {Object.keys(panelItemsGlobal).map(k => {
             const p = panelItemsGlobal[k]
             p.onChange = (value) => this.props.setGlobal({ [k]: value })
@@ -210,7 +202,7 @@ class Panel extends Component {
                 return null
             }
           })}
-        </div>
+        </fieldset>
       </div>
     )
   }
