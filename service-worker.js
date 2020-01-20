@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/zatlas/precache-manifest.4657163ecc39747b3ebbc2ce5681e57c.js"
+  "/zatlas/precache-manifest.5a49f090024f609b551e3fbf0a69c766.js"
 );
 
 self.addEventListener('message', (event) => {
